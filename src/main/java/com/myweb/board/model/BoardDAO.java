@@ -1,4 +1,4 @@
-package com.myweb.board.model;
+ package com.myweb.board.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

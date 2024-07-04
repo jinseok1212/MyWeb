@@ -11,6 +11,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.Session;
 
 
 @WebServlet("*.board") // .board 끝나는 모든 요청은 서블릿으로 연결
@@ -45,20 +47,42 @@ public class BoardController extends HttpServlet{
 		BoardService service;
 		
 		if(command.equals("/board/list.board")) { //목록화면
-			
 			//mvc2의 기본이동은 forward이다
 			//서비스 영역을 거쳐서 목록 data를 가지고 감
 			service = new BoardServiceImpl();
 			service.getList(request, response);
 			
 		} else if(command.equals("/board/write.board")) { //글 작성화면
-			
+//			HttpSession session = request.getSession();
+//			String user_id = (String)session.getAttribute("user_id");
+//			if(user_id == null) {
+//				response.sendRedirect("/MyWeb/index.jsp");
+//				return;
+//			}
 			request.getRequestDispatcher("board_write.jsp").forward(request, response);
+		
 		} else if(command.equals("/board/registForm.board")) { //글 등록
 			
 			//서비스..
 			service = new BoardServiceImpl();
 			service.regist(request, response);
+		} else if(command.equals("/board/getContent.board")) { //글 상세 내용
+			
+			service = new BoardServiceImpl();
+			service.getContent(request, response);
+		} else if(command.equals("/board/modify.board")) { //수정화면으로
+			service = new BoardServiceImpl();
+			service.modify(request, response);
+			
+		} else if(command.equals("/board/updateForm.board")) { //글 수정
+			
+			service = new BoardServiceImpl();
+			service.update(request, response);
+		} else if(command.equals("/board/delete.board")) {
+			
+			service = new BoardServiceImpl();
+			service.delete(request, response);
 		}
+		 
 	}
 }
